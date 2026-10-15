@@ -7,9 +7,16 @@ use App\Http\Resources\ProdutoResource;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProdutoRequest;
+use App\Services\ProdutoService;
 
 class ProdutoController extends Controller
 {
+
+    public function __construct(private ProdutoService $service)
+    {
+
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +32,7 @@ class ProdutoController extends Controller
     {
         $dados = $request->validated();
 
-        $produto = Produto::create($dados);
+        $produto = $this->service->create($dados);
 
         // Código 201 : Recurso Criado
         return new ProdutoResource($produto);
