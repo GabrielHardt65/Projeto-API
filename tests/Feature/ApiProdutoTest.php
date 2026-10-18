@@ -1,0 +1,26 @@
+<?php
+
+namespace Tests\Feature;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+
+class ApiProdutoTest extends TestCase
+{
+    
+    use RefreshDatabase;
+    /**
+     * A basic feature test example.
+     */
+    public function test_cria_produto_com_margem_correta(): void
+    {
+        $this->postJson('/api/produtos', [
+            'nome' => 'Lajota',
+            'preco_custo' => 100,
+            'preco' => 110,
+        ])->assertCreated();
+
+        $this->assertDatabaseHas('produtos', ['nome' => 'Lajota']);
+    }
+}
